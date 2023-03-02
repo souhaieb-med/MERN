@@ -35,14 +35,14 @@ const Navbar = () => {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link text-light" href="#">
-                Contact
+              <Link className="nav-link text-light" href="/register">
+                Register
               </Link>
             </li>
 
             <li className="nav-item">
               <Link className="nav-link text-light" href="/login">
-                Join
+                Login
               </Link>
             </li>
           </ul>
