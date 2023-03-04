@@ -1,4 +1,8 @@
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Modal } from "@ant-design/icons";
+import Link from "next/link";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -6,14 +10,30 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [secret, setSecret] = useState("");
 
-  const handleSubmit = ()=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('hello ==>')
-  }
+    try {
+      // console.log(name, email , password , secret);
+      const { data } = await axios.post("http://localhost:8000/api/register", {
+        name,
+        email,
+        password,
+        secret,
+      });
+      console.log(res.data);
+
+      setName("");
+      setPassword("");
+      setSecret("");
+      setEmail("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="row py-5">
       <div className="col-md-6 offset-md-3">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <small>
               <label className="text-muted">Your name</label>
@@ -23,7 +43,7 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               type="text"
               className="form-control"
-              placeholder="Enter Your Name"
+              placeholder="Enter your name"
             />
           </div>
           <div className="mb-3">
@@ -35,7 +55,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="form-control"
-              placeholder="email@email.com"
+              placeholder="example@email.com"
             />
           </div>
           <div className="mb-3">
@@ -72,7 +92,11 @@ const Register = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary col-12">
+          <button
+            type="submit"
+            className="btn btn-primary col-12"
+            disabled={!name || !email || !password || !secret}
+          >
             Submit
           </button>
         </form>
