@@ -1,7 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { Modal } from "@ant-design/icons";
 import Link from "next/link";
 
 const Register = () => {
