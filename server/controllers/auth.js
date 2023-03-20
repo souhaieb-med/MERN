@@ -1,7 +1,7 @@
-import User from "../models/user";
-import { hashPassword, comparePassword } from "../helpers/auth";
+const User = require('../models/user');
+const { hashPassword, comparePassword } = require ("../helpers/auth");
 
-export const register = async (req, res) => {
+exports.register = async (req, res) => {
   // console.log("REGISTER ENDPOINT ==> ", req.body);
   const { name, email, password, secret } = req.body;
   //validation
@@ -15,13 +15,12 @@ export const register = async (req, res) => {
   const exist = await User.findOne({ email });
   if (exist) return res.status(400).send("Email is taken");
   //hash password
-  const hashPassword = await hashPassword(password);
-
+  const hashedPassword = await hashPassword(password);
   //creating the user
-  const user = new User({ name, email, password: hashPassword, secret });
+  const user = new User({ name, email, password: hashedPassword, secret });
   try {
     await user.save();
-    // console.log("REGISTERED USER ==> ", user);
+    console.log("REGISTERED USER ==> ", user);
     return res.json({
       ok: true,
     });
